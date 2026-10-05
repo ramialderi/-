@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">إلا صلاتي</string>
+    <string name="widget_description">ويدجت مواقيت الصلاة مع خط دخول الوقت والعد التنازلي</string>
+    
+    <!-- Prayers -->
+    <string name="fajr">الفجر</string>
+    <string name="sunrise">الشروق</string>
+    <string name="dhuhr">الظهر</string>
+    <string name="asr">العصر</string>
+    <string name="maghrib">المغرب</string>
+    <string name="isha">العشاء</string>
+    <string name="qiyam">قيام الليل</string>
+    <string name="midnight">منتصف الليل</string>
+    <string name="imsak">الإمساك</string>
+
+    <!-- Navigation -->
+    <string name="nav_prayers">المواقيت</string>
+    <string name="nav_qibla">القبلة</string>
+    <string name="nav_athkar">الأذكار</string>
+    <string name="nav_tasbih">السبحة</string>
+    <string name="nav_settings">الإعدادات</string>
+
+    <!-- Widget & Status -->
+    <string name="prayer_entered_now">حان الآن وقت %s</string>
+    <string name="prayer_entered_sub">دخل وقت الصلاة الآن • مضى %d دقيقة</string>
+    <string name="time_remaining_until">المتبقي لصلاة %s</string>
+    <string name="prayer_time_window_hint">نافذة دخول الصلاة (أول 15 دقيقة)</string>
+    <string name="next_prayer_countdown_hint">خط العد التنازلي لموعد الصلاة التالية</string>
+
+    <!-- Permissions -->
+    <string name="location_permission_rationale">نحتاج إذن الموقع الجغرافي لحساب مواقيت الصلاة بدقة فائقة وتحديد اتجاه القبلة لكعبتك الشريفة.</string>
+    <string name="notification_permission_rationale">يرجى تفعيل التنبيهات لتذكيرك بأوقات الأذان ودخول الصلاة.</string>
+</resources>

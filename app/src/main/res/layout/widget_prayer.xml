@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="6dp">
+
+    <!-- The White Card matching user's exact design -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/widget_card_white"
+        android:paddingStart="16dp"
+        android:paddingTop="14dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="14dp">
+
+        <!-- Top Section: Left Prayer, Center Location/Date, Right Prayer -->
+        <LinearLayout
+            android:id="@+id/widget_top_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- Left Prayer (Current / Preceding Prayer) -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/widget_iv_left_icon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_prayer_crescent"
+                    android:contentDescription="أيقونة الصلاة الحالية" />
+
+                <TextView
+                    android:id="@+id/widget_tv_left_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="Isha"
+                    android:textColor="#111827"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/widget_tv_left_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="7:30 PM"
+                    android:textColor="#111827"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Center Column (City, Day, Gregorian & Hijri Date) -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.3"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/widget_tv_city"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Al-Hasakah"
+                    android:textColor="#D9822B"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/widget_tv_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:text="Wednesday"
+                    android:textColor="#2D7D6F"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/widget_tv_gregorian"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:text="Sep 30, 2026"
+                    android:textColor="#6B7280"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/widget_tv_hijri"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:text="Rabi' II 20"
+                    android:textColor="#6B7280"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <!-- Right Prayer (Next Prayer) -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/widget_iv_right_icon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_prayer_fajr"
+                    android:contentDescription="أيقونة الصلاة القادمة" />
+
+                <TextView
+                    android:id="@+id/widget_tv_right_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="Fajr"
+                    android:textColor="#111827"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/widget_tv_right_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4:45 AM"
+                    android:textColor="#111827"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- The Signature Orange & Light Gray Progress Bar -->
+        <ProgressBar
+            android:id="@+id/widget_progress_timeline"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="7dp"
+            android:layout_below="@id/widget_top_row"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="10dp"
+            android:max="100"
+            android:progress="60"
+            android:progressDrawable="@drawable/widget_elasalaty_progress" />
+
+        <!-- Center Bottom: Status Label & Big Countdown Display -->
+        <LinearLayout
+            android:id="@+id/widget_bottom_center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/widget_progress_timeline"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/widget_tv_status_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Left until Fajr"
+                android:textColor="#111827"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/widget_tv_countdown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="4:50:20"
+                android:textColor="#111827"
+                android:textSize="32sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Bottom Right Corner: Golden Lantern Pin -->
+        <ImageView
+            android:id="@+id/widget_iv_lantern"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="2dp"
+            android:layout_marginBottom="2dp"
+            android:src="@drawable/ic_prayer_lantern"
+            android:contentDescription="فانوس إلا صلاتي" />
+
+    </RelativeLayout>
+
+    <!-- Subtitle below the Card: Ela-Salaty -->
+    <TextView
+        android:id="@+id/widget_tv_app_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="Ela-Salaty"
+        android:textColor="#FFFFFF"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:shadowColor="#80000000"
+        android:shadowDx="0"
+        android:shadowDy="1"
+        android:shadowRadius="2" />
+
+</LinearLayout>

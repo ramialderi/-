@@ -1,0 +1,6 @@
+{
+  "name": "إلا صلاتي - مواقيت الصلاة",
+  "description": "تطبيق إسلامي شامل لمواقيت الصلاة حسب موقعك مع ويدجت ذكية تفاعلية، خط زمني لدخول الوقت والعد التنازلي، بوصلة القبلة، والأذكار",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

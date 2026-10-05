@@ -1,0 +1,34 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- Horizon bar -->
+    <path
+        android:strokeColor="#1F2937"
+        android:strokeWidth="2.2"
+        android:strokeLineCap="round"
+        android:pathData="M3,20L21,20" />
+    <!-- Half sun dome -->
+    <path
+        android:fillColor="#1F2937"
+        android:pathData="M6.5,18a5.5,5.5 0,0 1,11 0z" />
+    <!-- Sun top ray -->
+    <path
+        android:strokeColor="#1F2937"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:pathData="M12,5L12,8" />
+    <!-- Diagonal ray left -->
+    <path
+        android:strokeColor="#1F2937"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:pathData="M6.3,8.3L8.4,10.4" />
+    <!-- Diagonal ray right -->
+    <path
+        android:strokeColor="#1F2937"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:pathData="M17.7,8.3L15.6,10.4" />
+</vector>
