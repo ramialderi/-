@@ -343,6 +343,22 @@ fun SettingsScreen(
                         Spacer(modifier = Modifier.width(8.dp))
                         Text("تجربة صوت تنبيه الأذان", color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Button(
+                        onClick = {
+                            com.example.prayers.notifications.PrayerNotificationScheduler.sendTestPrayerAlert(context)
+                            android.widget.Toast.makeText(context, "تم إرسال إشعار موعد الصلاة بنجاح", android.widget.Toast.LENGTH_SHORT).show()
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
+                        shape = RoundedCornerShape(10.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Icon(imageVector = Icons.Default.Notifications, contentDescription = null, tint = IslamicEmeraldPrimary)
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text("إرسال إشعار تجريبي لدخول وقت الصلاة", color = MaterialTheme.colorScheme.onSurface)
+                    }
                 }
             }
         }

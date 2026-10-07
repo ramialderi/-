@@ -46,12 +46,25 @@
             android:name=".prayers.notifications.AthkarNotificationReceiver"
             android:exported="false" />
 
+        <!-- Exact Prayer Time Alerts & Widget Transitions -->
+        <receiver
+            android:name=".prayers.notifications.PrayerAlarmReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.example.prayers.ACTION_PRAYER_ALERT" />
+                <action android:name="com.example.prayers.ACTION_WIDGET_TRANSITION" />
+            </intent-filter>
+        </receiver>
+
         <receiver
             android:name=".prayers.notifications.BootReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
         </receiver>
     </application>

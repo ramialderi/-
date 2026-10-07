@@ -123,18 +123,21 @@ class PrayerViewModel(application: Application) : AndroidViewModel(application) 
                 updateQiblaValues()
                 qiblaCompassManager.setLocation(it.latitude, it.longitude)
                 PrayerAppWidget.updateAllWidgets(getApplication())
+                com.example.prayers.notifications.PrayerNotificationScheduler.scheduleUpcomingPrayers(getApplication())
             }
         }
         viewModelScope.launch {
             calculationMethod.collectLatest {
                 recalculate()
                 PrayerAppWidget.updateAllWidgets(getApplication())
+                com.example.prayers.notifications.PrayerNotificationScheduler.scheduleUpcomingPrayers(getApplication())
             }
         }
         viewModelScope.launch {
             juristicMethod.collectLatest {
                 recalculate()
                 PrayerAppWidget.updateAllWidgets(getApplication())
+                com.example.prayers.notifications.PrayerNotificationScheduler.scheduleUpcomingPrayers(getApplication())
             }
         }
         viewModelScope.launch {

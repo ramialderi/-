@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import com.example.prayers.model.CalculationMethod
 import com.example.prayers.model.JuristicMethod
 import com.example.prayers.model.LocationInfo
+import com.example.prayers.model.Prayer
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -89,6 +90,20 @@ class UserPreferencesRepository(private val context: Context) {
     fun setNotificationsEnabled(enabled: Boolean) {
         prefs.edit().putBoolean(KEY_NOTIFICATIONS, enabled).apply()
         _notificationsEnabledFlow.value = enabled
+    }
+
+    fun isPrayerNotificationEnabled(prayer: Prayer): Boolean =
+        prefs.getBoolean("pref_notif_${prayer.name}", true)
+
+    fun setPrayerNotificationEnabled(prayer: Prayer, enabled: Boolean) {
+        prefs.edit().putBoolean("pref_notif_${prayer.name}", enabled).apply()
+    }
+
+    fun isAzanSoundEnabled(): Boolean =
+        prefs.getBoolean("pref_azan_sound_enabled", true)
+
+    fun setAzanSoundEnabled(enabled: Boolean) {
+        prefs.edit().putBoolean("pref_azan_sound_enabled", enabled).apply()
     }
 
     companion object {

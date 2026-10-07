@@ -6,6 +6,8 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.os.Build
+import android.os.SystemClock
 import android.widget.RemoteViews
 import com.example.MainActivity
 import com.example.R
@@ -13,6 +15,7 @@ import com.example.prayers.calculator.PrayerCalculator
 import com.example.prayers.data.HijriDateHelper
 import com.example.prayers.data.UserPreferencesRepository
 import com.example.prayers.model.Prayer
+import com.example.prayers.notifications.PrayerNotificationScheduler
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -27,6 +30,13 @@ class PrayerAppWidget : AppWidgetProvider() {
         for (appWidgetId in appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId)
         }
+        // Ensure upcoming prayer alerts and widget transitions are always scheduled
+        PrayerNotificationScheduler.scheduleUpcomingPrayers(context)
+    }
+
+    override fun onEnabled(context: Context) {
+        super.onEnabled(context)
+        PrayerNotificationScheduler.scheduleUpcomingPrayers(context)
     }
 
     companion object {
@@ -99,29 +109,39 @@ class PrayerAppWidget : AppWidgetProvider() {
                 PrayerCalculator.formatTime12h(status.nextPrayerTimeMillis)
             )
 
-            // 4. Progress Bar & Countdown (Dynamic matching screenshot & user request)
+            // 4. Progress Bar & Real-time Live Chronometer Clock (Ticking continuously on home screen)
             if (status.isWithinEntryWindow) {
-                // First 15 minutes: Prayer time just entered
+                // First 30 minutes: Prayer time just entered
                 views.setTextViewText(
                     R.id.widget_tv_status_title,
                     "Now ${status.currentPrayer.englishName} Time"
                 )
-                views.setTextViewText(
-                    R.id.widget_tv_countdown,
-                    PrayerCalculator.formatDurationCountdown(status.elapsedSinceEntryMillis)
-                )
+
+                // Real-time count UP of elapsed seconds since prayer entry, synced to phone's clock
+                val elapsedMillis = now - status.currentPrayerTimeMillis
+                val baseElapsedRealtime = SystemClock.elapsedRealtime() - elapsedMillis
+                views.setChronometer(R.id.widget_chronometer, baseElapsedRealtime, "%s", true)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    views.setChronometerCountDown(R.id.widget_chronometer, false)
+                }
+
                 val progressPercent = (status.entryProgress * 100).toInt().coerceIn(5, 100)
                 views.setProgressBar(R.id.widget_progress_timeline, 100, progressPercent, false)
             } else {
-                // After 15 minutes: Countdown to next prayer
+                // After 30 minutes: Live Countdown to next prayer, synced to phone's clock
                 views.setTextViewText(
                     R.id.widget_tv_status_title,
                     "Left until ${status.nextPrayer.englishName}"
                 )
-                views.setTextViewText(
-                    R.id.widget_tv_countdown,
-                    PrayerCalculator.formatDurationCountdown(status.remainingToNextMillis)
-                )
+
+                // Real-time count DOWN to next prayer, ticking every second live on home screen
+                val remainingMillis = status.nextPrayerTimeMillis - now
+                val baseElapsedRealtime = SystemClock.elapsedRealtime() + remainingMillis
+                views.setChronometer(R.id.widget_chronometer, baseElapsedRealtime, "%s", true)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    views.setChronometerCountDown(R.id.widget_chronometer, true)
+                }
+
                 val progressPercent = (status.nextPrayerProgress * 100).toInt().coerceIn(2, 100)
                 views.setProgressBar(R.id.widget_progress_timeline, 100, progressPercent, false)
             }

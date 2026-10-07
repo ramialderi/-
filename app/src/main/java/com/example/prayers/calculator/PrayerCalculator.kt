@@ -160,8 +160,8 @@ object PrayerCalculator {
 
     /**
      * Computes the current prayer status, implementing the user's specific request:
-     * - Within the first 15 minutes of prayer entry: isWithinEntryWindow = true, shows prayer entry line.
-     * - After 15 minutes: isWithinEntryWindow = false, shows countdown and remaining time until next prayer.
+     * - Within the first 30 minutes of prayer entry: isWithinEntryWindow = true, shows prayer entry line.
+     * - After 30 minutes: isWithinEntryWindow = false, shows countdown and remaining time until next prayer.
      */
     fun getRealtimeStatus(
         currentTimeMillis: Long,
@@ -169,7 +169,7 @@ object PrayerCalculator {
         simulationMode: Boolean = false,
         simulateEntryWindow: Boolean = false
     ): PrayerRealtimeStatus {
-        val entryWindowMillis = 15 * 60 * 1000L
+        val entryWindowMillis = 30 * 60 * 1000L
 
         // Order of prayer checkpoints
         val prayerPairs = listOf(
@@ -229,25 +229,25 @@ object PrayerCalculator {
         var elapsedSinceEntry = now - currentPrayerTime
         var remainingToNext = nextPrayerTime - now
 
-        // If simulation mode is requested (allows user to test both 15-min entry mode and countdown mode!)
+        // If simulation mode is requested (allows user to test both 30-min entry mode and countdown mode!)
         if (simulationMode) {
             if (simulateEntryWindow) {
-                // Simulate: prayer entered 5 minutes ago (within 15 minutes window)
-                elapsedSinceEntry = 5 * 60 * 1000L
+                // Simulate: prayer entered 10 minutes ago (within 30 minutes window)
+                elapsedSinceEntry = 10 * 60 * 1000L
                 currentPrayerTime = now - elapsedSinceEntry
             } else {
-                // Simulate: prayer entered 35 minutes ago (after 15 minutes window -> showing countdown)
-                elapsedSinceEntry = 35 * 60 * 1000L
+                // Simulate: prayer entered 45 minutes ago (after 30 minutes window -> showing countdown)
+                elapsedSinceEntry = 45 * 60 * 1000L
                 currentPrayerTime = now - elapsedSinceEntry
             }
         }
 
         val isWithinWindow = elapsedSinceEntry in 0 until entryWindowMillis
 
-        // 1. Entry window progress (from 0 to 15 min)
+        // 1. Entry window progress (from 0 to 30 min)
         val entryProgress = (elapsedSinceEntry.toFloat() / entryWindowMillis.toFloat()).coerceIn(0f, 1f)
 
-        // 2. Next prayer countdown progress (from 15 min mark to next prayer)
+        // 2. Next prayer countdown progress (from 30 min mark to next prayer)
         val countdownStartMillis = currentPrayerTime + entryWindowMillis
         val totalCountdownSpan = (nextPrayerTime - countdownStartMillis).coerceAtLeast(1L)
         val countdownElapsed = (now - countdownStartMillis).coerceAtLeast(0L)

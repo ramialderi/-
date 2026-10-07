@@ -35,7 +35,7 @@ class ExampleUnitTest {
     }
 
     @Test
-    fun testPrayerEntryWindow_First15Minutes() {
+    fun testPrayerEntryWindow_First30Minutes() {
         val cal = Calendar.getInstance()
         val makkah = CitiesData.DEFAULT_CITY
         val schedule = PrayerCalculator.calculateDaySchedule(
@@ -44,17 +44,17 @@ class ExampleUnitTest {
             longitude = makkah.longitude
         )
 
-        // Simulate exactly 5 minutes after Dhuhr starts
-        val testTime = schedule.dhuhrMillis + (5 * 60 * 1000L)
+        // Simulate 20 minutes after Dhuhr starts (within 30-minute window)
+        val testTime = schedule.dhuhrMillis + (20 * 60 * 1000L)
         val status = PrayerCalculator.getRealtimeStatus(testTime, schedule)
 
         assertEquals("Current prayer should be Dhuhr", Prayer.DHUHR, status.currentPrayer)
-        assertTrue("Should be within 15-minute entry window", status.isWithinEntryWindow)
+        assertTrue("Should be within 30-minute entry window", status.isWithinEntryWindow)
         assertTrue("Entry progress should be between 0 and 1", status.entryProgress in 0f..1f)
     }
 
     @Test
-    fun testPrayerCountdown_After15Minutes() {
+    fun testPrayerCountdown_After30Minutes() {
         val cal = Calendar.getInstance()
         val makkah = CitiesData.DEFAULT_CITY
         val schedule = PrayerCalculator.calculateDaySchedule(
@@ -63,13 +63,13 @@ class ExampleUnitTest {
             longitude = makkah.longitude
         )
 
-        // Simulate 30 minutes after Dhuhr starts (past the 15-minute entry window)
-        val testTime = schedule.dhuhrMillis + (30 * 60 * 1000L)
+        // Simulate 45 minutes after Dhuhr starts (past the 30-minute entry window)
+        val testTime = schedule.dhuhrMillis + (45 * 60 * 1000L)
         val status = PrayerCalculator.getRealtimeStatus(testTime, schedule)
 
         assertEquals("Current prayer is still Dhuhr", Prayer.DHUHR, status.currentPrayer)
         assertEquals("Next prayer should be Asr", Prayer.ASR, status.nextPrayer)
-        assertFalse("Must NOT be within 15-minute entry window anymore", status.isWithinEntryWindow)
+        assertFalse("Must NOT be within 30-minute entry window anymore", status.isWithinEntryWindow)
         assertTrue("Remaining time to next prayer must be positive", status.remainingToNextMillis > 0)
         assertTrue("Next prayer progress should be between 0 and 1", status.nextPrayerProgress in 0f..1f)
     }
@@ -123,5 +123,27 @@ class ExampleUnitTest {
 
         assertTrue("Day 14 should be a White Day", HijriDateHelper.isWhiteDay(14))
         assertFalse("Day 1 should not be a White Day", HijriDateHelper.isWhiteDay(1))
+    }
+
+    @Test
+    fun testEntryWindowDuration_Is30Minutes() {
+        val cal = Calendar.getInstance()
+        val makkah = CitiesData.DEFAULT_CITY
+        val schedule = PrayerCalculator.calculateDaySchedule(
+            calendar = cal,
+            latitude = makkah.latitude,
+            longitude = makkah.longitude
+        )
+
+        // Exactly at 29 minutes after Dhuhr: must still be in entry window
+        val at29Min = schedule.dhuhrMillis + (29 * 60 * 1000L)
+        val status29 = PrayerCalculator.getRealtimeStatus(at29Min, schedule)
+        assertTrue("At 29 min should be within entry window", status29.isWithinEntryWindow)
+        assertEquals(30 * 60 * 1000L, status29.entryWindowTotalMillis)
+
+        // At 31 minutes after Dhuhr: must have transitioned to countdown
+        val at31Min = schedule.dhuhrMillis + (31 * 60 * 1000L)
+        val status31 = PrayerCalculator.getRealtimeStatus(at31Min, schedule)
+        assertFalse("At 31 min should NOT be in entry window", status31.isWithinEntryWindow)
     }
 }

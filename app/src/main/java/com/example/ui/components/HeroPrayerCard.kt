@@ -310,7 +310,7 @@ fun HeroPrayerCard(
                 )
             }
 
-            // Interactive simulation buttons to test the 15-minute entry window vs countdown window
+            // Interactive simulation buttons to test the 30-minute entry window vs countdown window
             Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                 Surface(
                     shape = RoundedCornerShape(10.dp),
@@ -320,7 +320,7 @@ fun HeroPrayerCard(
                         .clickable { onToggleSimulation(true, true) }
                 ) {
                     Text(
-                        text = "دخول الوقت (15د)",
+                        text = "دخول الوقت (30د)",
                         color = if (isSimulationActive && simulateEntryWindow) Color.White else MaterialTheme.colorScheme.onSurfaceVariant,
                         fontSize = 11.sp,
                         fontWeight = FontWeight.Bold,

@@ -176,15 +176,16 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/widget_tv_countdown"
+            <Chronometer
+                android:id="@+id/widget_chronometer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
                 android:text="4:50:20"
                 android:textColor="#111827"
                 android:textSize="32sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:gravity="center" />
         </LinearLayout>
 
         <!-- Bottom Right Corner: Golden Lantern Pin -->

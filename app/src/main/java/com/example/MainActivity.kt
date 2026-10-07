@@ -28,6 +28,8 @@ class MainActivity : ComponentActivity() {
         PrayerNotificationHelper.createNotificationChannel(this)
         AthkarNotificationReceiver.createNotificationChannel(this)
         AthkarReminderScheduler.rescheduleAll(this)
+        com.example.prayers.notifications.PrayerNotificationScheduler.scheduleUpcomingPrayers(this)
+        com.example.widget.PrayerAppWidget.updateAllWidgets(this)
 
         val targetTab = if (intent.getStringExtra("selected_tab") == "athkar") {
             AppTab.ATHKAR
